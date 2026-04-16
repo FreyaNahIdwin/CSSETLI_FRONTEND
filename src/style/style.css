@@ -17,6 +17,27 @@
 }
 
 
+.theme-btn {
+    border: none;
+    background: transparent;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+
+body.dark .background {
+    background-image: linear-gradient(#6D6C6C, #222121);
+}
+
+
+body.light .background {
+    background-image: linear-gradient(#ffffff, #aaaaaa); /*vagy ((#e3f2fd, #ffffff);)*/
+    min-height: 100vh;
+    background-size: 1000000% 1000000%;
+    animation: move 7s alternate infinite;
+}
+
+
 .csetliColor {
     background: linear-gradient(to right, #FD0303ff, #D95E2Eff);
     background-clip: text;
