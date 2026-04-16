@@ -123,16 +123,22 @@ export async function szobakeszites(ismerosId) {
     else return { result: true, szobaId: data.szobaId };
 }
 
-export async function uzenetkuldes(ismerosId) {
-    const res = await fetch(`${BASE}/uzenetkuldes/${ismerosId}`, {
+export async function uzenetkuldes(szobaId, szoveg) {
+    const res = await fetch(`${BASE}/uzenetkuldes/${szobaId}`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ismerosId })
-    })
+        body: JSON.stringify({ szoveg })
+    });
+
     const data = await res.json();
+
     if (!res.ok) return { result: false, message: data.message };
-    else return { result: true, message: data.message };
+
+    return {
+        result: true,
+        uzenet: data.uzenet
+    };
 }
 
 export async function bejegyzesek() {

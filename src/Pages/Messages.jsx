@@ -14,6 +14,7 @@ export default function Messages() {
     const [lang, setLang] = useState(1);
     const [ismerosId, setIsmerosId] = useState(null);
     const [szobaId, setSzobaId] = useState(null);
+    const [text, setText] = useState("");
 
     useEffect(() => {
         (async () => {
@@ -34,15 +35,19 @@ export default function Messages() {
 
     useEffect(() => {
         if (!szobaId) return;
-    
-        async function load() {
+
+        async function loadMessages() {
             const res = await getUzenetek(szobaId);
             if (res.result) {
                 setUzenet(res.message.uzenetek);
             }
         }
-    
-        load();
+
+        loadMessages();
+
+        const interval = setInterval(loadMessages, 2000);
+
+        return () => clearInterval(interval);
     }, [szobaId]);
 
     return (
@@ -96,8 +101,28 @@ export default function Messages() {
 
                             {/* INPUT */}
                             <div className="d-flex p-2" style={{ maxWidth: "97%" }}>
-                                <input className="form-control" placeholder="Üzenet..." />
-                                <button className="btn csetliColor me-auto">Küldés</button>
+                                <input
+                                    className="form-control"
+                                    placeholder="Üzenet..."
+                                    value={text}
+                                    onChange={(e) => setText(e.target.value)}
+                                />
+                                <button
+                                    className="btn csetliColor me-auto"
+                                    onClick={async () => {
+                                        if (!szobaId || !text.trim()) return;
+
+                                        const res = await uzenetkuldes(szobaId, text);
+
+                                        if (res.result) {
+                                            setUzenet(prev => [...prev, res.uzenet]);
+
+                                            setText("");
+                                        }
+                                    }}
+                                >
+                                    Küldés
+                                </button>
                             </div>
                         </div>
                     </div>

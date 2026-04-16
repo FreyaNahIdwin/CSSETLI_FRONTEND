@@ -1,93 +1,16 @@
 import { useState, useEffect, useRef } from "react";
-import "../style/style.css";
+import LikeIcon from "../kepek/comment.png"
+import Comment from "../kepek/Comment.png"
+import "../style/style.css"
 import { deleteBejegyzes, BASE } from "../api";
+import KepSzerkesztesCard from "./KepSzerkesztesCard";
 
-export default function PostCard({
-    bejegyzes_id,
-    profilkep,
-    felhasznalonev,
-    feltoltotkep,
-    szoveg
-}) {
+export default function PostCard({ bejegyzes_id, profilkep, felhasznalonev, feltoltotkep, szoveg }) {
+    console.log('kép', feltoltotkep);
     const [showMenu, setShowMenu] = useState(false);
     const menuRef = useRef(null);
+    const [deleteBe, setDeleteBe] = useState();
 
-    const [hasReacted, setHasReacted] = useState(false);
-
-    const [selected, setSelected] = useState("");
-    const [counts, setCounts] = useState({
-        like: 0,
-        love: 0,
-        haha: 0
-    });
-
-    const emojiMap = {
-        like: "👍",
-        love: "❤️",
-        haha: "😂"
-    };
-
-    //  EMOJI KATTINTÁS
-    const handleEmoji = async (type) => {
-        if (hasReacted) return;
-
-        try {
-            const res = await fetch(`http://localhost:3000/emoji/${bejegyzes_id}`, {
-                method: "POST",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ type }) //  EZ MEGY AZ ADATBÁZISBA
-            });
-
-            const result = await res.json();
-
-            if (result.alreadyReacted) {
-                setHasReacted(true);
-                return;
-            }
-
-            if (result.success) {
-                setHasReacted(true);
-                setSelected(emojiMap[type]);
-            }
-
-            if (result.counts) {
-                setCounts(result.counts);
-            }
-
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
-    // 🔹 SELECT
-    const handleChange = (value) => {
-        handleEmoji(value);
-    };
-
-    // 🔹 KEZDŐ BETÖLTÉS
-    const fetchEmojis = async () => {
-        try {
-            const res = await fetch(`http://localhost:3000/emoji-count/${bejegyzes_id}`);
-            const data = await res.json();
-
-            setCounts({
-                like: data.counts?.like || 0,
-                love: data.counts?.love || 0,
-                haha: data.counts?.haha || 0
-            });
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
-    useEffect(() => {
-        fetchEmojis();
-    }, []);
-
-    // 🔹 MENÜ ZÁRÁS
     useEffect(() => {
         function handleClickOutside(event) {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -97,92 +20,138 @@ export default function PostCard({
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
+    (async () => {
+        const data = await deleteBejegyzes();
+        if (data.result) {
+            setPosts(data.posts);
+        } else {
+            setPosts([]);
+        }
+    })();
 
     return (
-        <div className="d-flex flex-column align-items-center m-3 text-white">
+        <div className="d-flex flex-column justify-content-center align-items-center m-3 text-white">
             <div className="bombo w-50 p-4 position-relative">
 
-                {/* MENÜ */}
-                <div
-                    className="position-absolute"
-                    style={{ top: "15px", right: "20px" }}
-                    ref={menuRef}
-                >
+                {/* Menü választó rész */}
+                <div className="position-absolute" style={{ top: "15px", right: "20px" }} ref={menuRef}>
                     <button
                         className="btn text-white border-0"
+                        type="button"
+                        style={{ fontSize: "20px", background: "transparent" }}
                         onClick={() => setShowMenu(!showMenu)}
                     >
                         &#8942;
                     </button>
 
+                    {/* Feltételes renderelés: Csak akkor jelenik meg, ha showMenu true */}
                     {showMenu && (
-                        <div className="bg-dark border rounded p-2">
+                        <div className="bg-dark border border-secondary rounded p-2 shadow"
+                            style={{ position: "absolute", right: 0, zIndex: 1000, minWidth: "120px" }}>
                             <div
-                                className="text-danger"
+                                className="p-2 border-bottom border-secondary text-white hover-item"
                                 style={{ cursor: "pointer" }}
-                                onClick={async () => {
-                                    const res = await deleteBejegyzes(bejegyzes_id);
-                                    alert(res.message);
-                                    window.location.reload();
+                                onClick={() => { setShowMenu(false); KepSzerkesztesCard }}
+                            >
+                                <small>Szerkesztés</small>
+                            </div>
+                            <div
+                                className="p-2 text-danger hover-item"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => {
+                                    setShowMenu(false);
+                                    (async () => {
+                                        const res = await deleteBejegyzes(bejegyzes_id)
+                                        window.location.reload();
+                                        alert(res.message);
+
+                                    })();
                                 }}
                             >
-                                Törlés
+                                <small>Törlés</small>
                             </div>
                         </div>
                     )}
                 </div>
 
-                {/* PROFIL */}
-                <div className="d-flex m-2">
-                    <img
-                        style={{ width: "50px", height: "50px" }}
-                        src={profilkep}
-                        alt=""
-                    />
-                    <div className="mx-2">{felhasznalonev}</div>
+                {/* --- A kártya többi része változatlan --- */}
+                <div className="d-flex flex-row m-2">
+                    <div className="mx-1">
+                        <img
+                            style={{ width: "50px", height: "50px", objectFit: "cover", borderRadius: "50%" }} src={profilkep} alt="profilkep" />
+                    </div>
+
+                    <div className="mx-1 d-flex align-items-center" style={{ fontSize: "25px" }}>
+                        {felhasznalonev}
+                    </div>
                 </div>
 
-                {/* KÉP */}
-                {feltoltotkep && (
-                    <img
-                        style={{ height: "300px" }}
-                        src={`${BASE}/uploads/${feltoltotkep}`}
-                        alt=""
-                    />
+                {feltoltotkep && !szoveg && (
+                    <div className="d-flex justify-content-center m-2" >
+                        <img className="m-2" style={{
+                            height: "300px", objectFit: "cover", borderRadius: "45px", borderTopRightRadius: "45px",
+                            borderBottomRightRadius: "45px"
+                        }} src={`${BASE}/uploads/${feltoltotkep}`} alt="poszt" />
+                    </div>
                 )}
 
-                {/* SZÖVEG */}
-                {szoveg && <div className="m-2">{szoveg}</div>}
-
-                {/* EMOJI */}
-                <div className="m-2">
-                    <select onChange={(e) => handleChange(e.target.value)} defaultValue="">
-                        <option value="" disabled>😊 Válassz</option>
-                        <option value="like">👍 Like</option>
-                        <option value="love">❤️ Love</option>
-                        <option value="haha">😂 Haha</option>
-                    </select>
-
-                    {selected && (
-                        <span style={{ marginLeft: "10px", fontSize: "20px" }}>
-                            {selected}
-                        </span>
-                    )}
-
-                    {/* SZÁMLÁLÓ */}
-                    <div style={{ marginTop: "10px" }}>
-                        👍 {counts?.like ?? 0} &nbsp;
-                        ❤️ {counts?.love ?? 0} &nbsp;
-                        😂 {counts?.haha ?? 0}
-                    </div>
-                    {hasReacted && (
-                        <div style={{ color: "gray", marginTop: "5px" }}>
-                            Már érkezett tőled egy reakció 👍
+                {feltoltotkep && szoveg && (
+                    <div
+                        className="d-flex m-2"
+                        style={{
+                            background: "#333333",
+                            borderRadius: "45px",
+                            overflow: "hidden"
+                        }}
+                    >
+                        {/* KEP */}
+                        <div style={{ flex: "0 0 300px" }}>
+                            <img
+                                src={`${BASE}/uploads/${feltoltotkep}`}
+                                alt="poszt"
+                                style={{
+                                    width: "300px",
+                                    height: "300px",
+                                    objectFit: "cover",
+                                    display: "block",
+                                    borderTopRightRadius: "45px",
+                                    borderBottomRightRadius: "45px"
+                                }}
+                            />
                         </div>
-                    )}
-                </div>
 
+                        {/* SZOVEG */}
+                        <div
+                            style={{
+                                flex: 1,
+                                padding: "12px",
+                                fontSize: "20px",
+                                overflowWrap: "anywhere",
+                                wordBreak: "break-word",
+                                whiteSpace: "pre-wrap",
+                                minWidth: 0
+                            }}
+                        >
+                            {szoveg}
+                        </div>
+                    </div>
+                )}
+
+                {!feltoltotkep && szoveg && (
+                    <div className="m-2 p-3" style={{ fontSize: "20px", background: "#333333 ", borderRadius: "45px", overflowWrap: "break-word" }}>
+                        {szoveg}
+                    </div>
+                )}
+
+                <div className="d-flex flex-row m-2">
+                    <div className="mx-1"><img src={LikeIcon} alt="like" /></div>
+                    <div className="mx-1"><img src={LikeIcon} alt="like" /></div>
+                    <div className="mx-1"><img src={LikeIcon} alt="like" /></div>
+                    <div className="mx-1">
+                        <img src={Comment} alt="komment" /> komment
+                    </div>
+                </div>
             </div>
         </div>
-    );
+    )
 }
