@@ -1,0 +1,115 @@
+.background {
+    background-image: linear-gradient(#6D6C6C, #222121);
+    min-height: 100vh;
+    background-size: 1000000% 1000000%;
+    animation: move 7s alternate infinite;
+}
+
+@keyframes move {
+    from {
+        background-position: 0%;
+    }
+
+
+    to {
+        background-position: 100% 100%;
+    }
+}
+
+
+.csetliColor {
+    background: linear-gradient(to right, #FD0303ff, #D95E2Eff);
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    color: transparent;
+}
+
+.icon {
+    width: 50px;
+    margin: 10px;
+}
+
+.navbar {
+    background: linear-gradient(to right, #FD0303ff, #D95E2Eff);
+    ;
+}
+
+.bombo {
+    border: solid #2b2b2b;
+    border-radius: 45px;
+    background-color: #2b2b2b;
+}
+
+.accDelete{
+    color: rgba(180, 11, 11, 0.521);
+}
+
+.container {
+  display: flex;
+  width: 100%;
+}
+
+.container > div:first-child {
+  flex: 1; 
+}
+
+.container > div:nth-child(2) {
+  flex: 3; 
+}
+
+/* 1. Képek ne lógjanak ki soha */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 2. A 'background' osztály paddingjének felülírása mobilon */
+@media (max-width: 768px) {
+    .background {
+        padding: 20px !important;
+    }
+
+    /* Ha mobilon túl nagyok a betűk, itt csökkentheted */
+    .fs-1 { 
+        font-size: 1.5rem !important; 
+    }
+}
+
+.cardsContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.profile-preview-container {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid #D95E2E;
+    overflow: hidden;
+    background-color: #333;
+}
+
+.profile-preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Mobilon, hogy ne legyen túl széles az input */
+@media (max-width: 768px) {
+    .w-75 {
+        width: 100% !important;
+    }
+}
+
+.friends-card {
+    width: 100%; /* Kitölti a Bootstrap oszlopát */
+    max-width: 350px; /* De ne legyen túl óriási se */
+    margin: 0 auto; /* Középre igazítja az oszlopon belül */
+}
+
+.color{
+    color: antiquewhite;
+}

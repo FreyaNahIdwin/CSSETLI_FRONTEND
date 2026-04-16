@@ -1,0 +1,25 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FD0303"></stop>
+      <stop offset="100%" stop-color="#D95E2E"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- Nagyító kör -->
+  <circle cx="90" cy="90" r="70" fill="none" stroke="url(#grad)" stroke-width="10"></circle>
+
+  <!-- Nagyító nyél -->
+  <line x1="140" y1="140" x2="180" y2="180" stroke="url(#grad)" stroke-width="10" stroke-linecap="round"></line>
+
+  <!-- Kép keret -->
+  <rect x="50" y="60" width="80" height="60" rx="5" fill="none" stroke="url(#grad)" stroke-width="6"></rect>
+
+  <!-- Hegyek -->
+  <polygon points="55,115 80,90 95,105 115,85 125,115" fill="url(#grad)"></polygon>
+
+  <!-- Nap -->
+  <circle cx="110" cy="75" r="6" fill="url(#grad)"></circle>
+
+</svg>
