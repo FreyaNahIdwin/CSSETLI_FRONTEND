@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import LikeIcon from "../kepek/comment.png"
+import LikeIcon from "../kepek/Comment.png"
 import Comment from "../kepek/Comment.png"
 import "../style/style.css"
 import { deleteBejegyzes, BASE } from "../api";
