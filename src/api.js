@@ -1,4 +1,4 @@
-export const BASE = 'https://nodejs310.dszcbaross.edu.hu'
+export const BASE = 'http://nodejs3.dszcbaross.edu.hu:23010'
 
 export async function regisztracio(email, felhasznalonev, jelszo, file) {
     const formData = new FormData();
