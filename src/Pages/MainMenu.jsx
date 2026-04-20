@@ -15,7 +15,6 @@ export default function MainMenu() {
     const [posts, setPosts] = useState([]);
     const [showEditModal, setShowEditModal] = useState(false);
 
-
     useEffect(() => {
         (async () => {
             const data = await bejegyzesek();
@@ -33,23 +32,25 @@ export default function MainMenu() {
     }, []);
 
     return (
-        <div className="background p-3 p-md-5">
+        <div className="background p-0 p-md-5"> {/* Csökkentett padding mobilon a kártyák maximális szélessége érdekében */}
             <Navbar homeI={feketeHaz} messagesI={messages} settingsI={settings} peopleI={people} />
-            {posts.map((post) => (
-                <PostCard
-                    key={post.bejegyzes_id}
-                    bejegyzes_id={post.bejegyzes_id}
-                    feltoltotkep={post.bejegyzes_kep || null}
-                    szoveg={post.tartalom || null}
-                    felhasznalonev={post.felhasznalonev}
-                    profilkep={`${BASE}/uploads/${post.profilkep}`}
-                />
-
-            ))}
+            <div className="container-fluid px-0"> {/* d-flex flex-column align-items-center helyett container-fluid a teljes szélességért */}
+                {posts.map((post) => (
+                    <div key={post.bejegyzes_id} className="w-100 px-2 px-md-3"> {/* Csökkentett padding a kártyák szélénél */}
+                        <PostCard
+                            bejegyzes_id={post.bejegyzes_id}
+                            feltoltotkep={post.bejegyzes_kep || null}
+                            szoveg={post.tartalom || null}
+                            felhasznalonev={post.felhasznalonev}
+                            profilkep={`${BASE}/uploads/${post.profilkep}`}
+                        />
+                    </div>
+                ))}
+            </div>
             <KepFeltoltesCard />
             {showEditModal && (
                 <KepSzerkesztesCard
-                    onClose={() => setShowEditModal(false)}  // Pass close handler
+                    onClose={() => setShowEditModal(false)}
                 />
             )}
         </div>
