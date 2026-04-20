@@ -3,13 +3,10 @@ import LikeIcon from "../kepek/Comment.png"
 import Comment from "../kepek/Comment.png"
 import "../style/style.css"
 import { deleteBejegyzes, BASE } from "../api";
-import KepSzerkesztesCard from "./KepSzerkesztesCard";
 
 export default function PostCard({ bejegyzes_id, profilkep, felhasznalonev, feltoltotkep, szoveg }) {
-    console.log('kép', feltoltotkep);
     const [showMenu, setShowMenu] = useState(false);
     const menuRef = useRef(null);
-    const [deleteBe, setDeleteBe] = useState();
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -20,18 +17,11 @@ export default function PostCard({ bejegyzes_id, profilkep, felhasznalonev, felt
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
-    (async () => {
-        const data = await deleteBejegyzes();
-        if (data.result) {
-            setPosts(data.posts);
-        } else {
-            setPosts([]);
-        }
-    })();
 
     return (
-        <div className="d-flex flex-column justify-content-center align-items-center m-3 text-white">
-            <div className="bombo w-50 p-4 position-relative">
+        <div className="d-flex flex-column justify-content-center align-items-center m-1 m-md-3 text-white">
+            {/* w-50 lecserélve: mobilon 95%, tableten/PC-n max 600px */}
+            <div className="bombo p-3 p-md-4 position-relative" style={{ width: "95%", maxWidth: "600px" }}>
 
                 {/* Menü választó rész */}
                 <div className="position-absolute" style={{ top: "15px", right: "20px" }} ref={menuRef}>
@@ -44,28 +34,24 @@ export default function PostCard({ bejegyzes_id, profilkep, felhasznalonev, felt
                         &#8942;
                     </button>
 
-                    {/* Feltételes renderelés: Csak akkor jelenik meg, ha showMenu true */}
                     {showMenu && (
                         <div className="bg-dark border border-secondary rounded p-2 shadow"
                             style={{ position: "absolute", right: 0, zIndex: 1000, minWidth: "120px" }}>
                             <div
                                 className="p-2 border-bottom border-secondary text-white hover-item"
                                 style={{ cursor: "pointer" }}
-                                onClick={() => { setShowMenu(false); KepSzerkesztesCard }}
+                                onClick={() => setShowMenu(false)}
                             >
                                 <small>Szerkesztés</small>
                             </div>
                             <div
                                 className="p-2 text-danger hover-item"
                                 style={{ cursor: "pointer" }}
-                                onClick={() => {
+                                onClick={async () => {
                                     setShowMenu(false);
-                                    (async () => {
-                                        const res = await deleteBejegyzes(bejegyzes_id)
-                                        window.location.reload();
-                                        alert(res.message);
-
-                                    })();
+                                    const res = await deleteBejegyzes(bejegyzes_id)
+                                    window.location.reload();
+                                    alert(res.message);
                                 }}
                             >
                                 <small>Törlés</small>
@@ -74,62 +60,60 @@ export default function PostCard({ bejegyzes_id, profilkep, felhasznalonev, felt
                     )}
                 </div>
 
-                {/* --- A kártya többi része változatlan --- */}
-                <div className="d-flex flex-row m-2">
+                {/* Fejléc: Profilkép + Név */}
+                <div className="d-flex flex-row align-items-center m-2">
                     <div className="mx-1">
-                        <img
-                            style={{ width: "50px", height: "50px", objectFit: "cover", borderRadius: "50%" }} src={profilkep} alt="profilkep" />
+                        <img style={{ width: "40px", height: "40px", objectFit: "cover", borderRadius: "50%" }} src={profilkep} alt="profilkep" />
                     </div>
-
-                    <div className="mx-1 d-flex align-items-center" style={{ fontSize: "25px" }}>
+                    <div className="mx-1" style={{ fontSize: "20px", fontWeight: "bold" }}>
                         {felhasznalonev}
                     </div>
                 </div>
 
+                {/* KÉP (szöveg nélkül) */}
                 {feltoltotkep && !szoveg && (
                     <div className="d-flex justify-content-center m-2" >
-                        <img className="m-2" style={{
-                            height: "300px", objectFit: "cover", borderRadius: "45px", borderTopRightRadius: "45px",
-                            borderBottomRightRadius: "45px"
+                        <img className="img-fluid" style={{
+                            maxHeight: "400px", objectFit: "cover", borderRadius: "25px", width: "100%"
                         }} src={`${BASE}/uploads/${feltoltotkep}`} alt="poszt" />
                     </div>
                 )}
 
+                {/* KÉP + SZOVEG EGYÜTT (A kényes rész) */}
                 {feltoltotkep && szoveg && (
                     <div
-                        className="d-flex m-2"
+                        className="d-flex flex-column flex-md-row m-2" // Mobilon egymás alá, PC-n egymás mellé rakja
                         style={{
                             background: "#333333",
-                            borderRadius: "45px",
+                            borderRadius: "25px",
                             overflow: "hidden"
                         }}
                     >
-                        {/* KEP */}
-                        <div style={{ flex: "0 0 300px" }}>
+                        {/* KÉP: Mobilon teljes szélesség, PC-n fix 200-250px */}
+                        <div style={{ flex: "0 0 auto" }}>
                             <img
                                 src={`${BASE}/uploads/${feltoltotkep}`}
                                 alt="poszt"
                                 style={{
-                                    width: "300px",
-                                    height: "300px",
+                                    width: "100%",
+                                    minWidth: "200px",
+                                    maxWidth: "100%",
+                                    height: "250px",
                                     objectFit: "cover",
-                                    display: "block",
-                                    borderTopRightRadius: "45px",
-                                    borderBottomRightRadius: "45px"
+                                    display: "block"
                                 }}
                             />
                         </div>
 
-                        {/* SZOVEG */}
+                        {/* SZOVEG: Kitölti a maradék helyet */}
                         <div
                             style={{
                                 flex: 1,
-                                padding: "12px",
-                                fontSize: "20px",
+                                padding: "15px",
+                                fontSize: "16px",
                                 overflowWrap: "anywhere",
                                 wordBreak: "break-word",
-                                whiteSpace: "pre-wrap",
-                                minWidth: 0
+                                whiteSpace: "pre-wrap"
                             }}
                         >
                             {szoveg}
@@ -137,18 +121,20 @@ export default function PostCard({ bejegyzes_id, profilkep, felhasznalonev, felt
                     </div>
                 )}
 
+                {/* CSAK SZOVEG */}
                 {!feltoltotkep && szoveg && (
-                    <div className="m-2 p-3" style={{ fontSize: "20px", background: "#333333 ", borderRadius: "45px", overflowWrap: "break-word" }}>
+                    <div className="m-2 p-3" style={{ fontSize: "18px", background: "#333333 ", borderRadius: "20px", wordBreak: "break-word" }}>
                         {szoveg}
                     </div>
                 )}
 
-                <div className="d-flex flex-row m-2">
-                    <div className="mx-1"><img src={LikeIcon} alt="like" /></div>
-                    <div className="mx-1"><img src={LikeIcon} alt="like" /></div>
-                    <div className="mx-1"><img src={LikeIcon} alt="like" /></div>
-                    <div className="mx-1">
-                        <img src={Comment} alt="komment" /> komment
+                {/* Footer ikonok */}
+                <div className="d-flex flex-wrap m-2">
+                    <div className="mx-1"><img src={LikeIcon} alt="like" style={{width: "24px"}} /></div>
+                    <div className="mx-1"><img src={LikeIcon} alt="like" style={{width: "24px"}} /></div>
+                    <div className="mx-1"><img src={LikeIcon} alt="like" style={{width: "24px"}} /></div>
+                    <div className="mx-1 text-secondary" style={{fontSize: "14px"}}>
+                        <img src={Comment} alt="komment" style={{width: "24px"}} /> komment
                     </div>
                 </div>
             </div>
