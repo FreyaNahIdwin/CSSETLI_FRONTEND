@@ -6,19 +6,18 @@ import { regisztracio } from "../api";
 import { Link, useNavigate } from "react-router-dom";
 import csetliLogo from "../kepek/csetli.png";
 import "../style/style.css"
-import useLanguage from "../language"
+import getLanguage from "../language"
 
 export default function RegistrationPage() {
 
     const navigate = useNavigate()
 
-    const [lang, setLang] = useState(useLanguage(1))
+    const [lang, setLang] = useState(getLanguage("1"))
 
     useEffect(() => {
         // a localstorage-et beolvassuk
         const language = JSON.parse(localStorage.getItem("language")) || { lang: "0" }
-        setLang(useLanguage(language.lang))
-        console.log(lang.username);
+        setLang(getLanguage(language.lang))
     }, [])
 
     const [email, setEmail] = useState("");
@@ -36,21 +35,6 @@ export default function RegistrationPage() {
             setImagePreview(URL.createObjectURL(selectedFile))
         }
     }
-
-    const uploadData = async () => {
-        if (!file) {
-            alert('Nincs kiválasztva kép')
-            return
-        }
-        const data = await regisztracio(email, felhasználonev, jelszo, file)
-        console.log(data)
-        alert(data.message)
-        if (data.result) {
-            navigate(-1)
-        }
-    }
-
-
 
     return (
         <div className="background min-vh-100 py-5"> {/* min-vh-100 jobb, mint a vh-100, ha görgetni kell */}
@@ -80,6 +64,9 @@ export default function RegistrationPage() {
                                     }
                                     if (jelszo !== jelszo2) {
                                         return alert("A jelszavak nem egyeznek")
+                                    }
+                                    if (!file) {
+                                        return alert("Profilkép kiválasztása kötelező!")
                                     }
                                     // Itt érdemes összevonni a regisztrációt és a képfeltöltést egy kérésbe,
                                     // de a te logikádat követve:
