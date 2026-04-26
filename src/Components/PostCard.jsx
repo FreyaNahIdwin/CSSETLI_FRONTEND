@@ -240,7 +240,7 @@ useEffect(() => {
                 }}
                 onClick={() => setShowFullText(!showFullText)}
               >
-                {showFullText ? "Kevesebb megjelenítés" : "Több megjelenítés"}
+                {showFullText ? {lang.less} : {lang.more}
               </button>
             )}
           </div>
