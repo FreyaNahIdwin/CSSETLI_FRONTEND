@@ -1,42 +1,6 @@
 .background {
-    background-image: linear-gradient(#6D6C6C, #222121);
-    min-height: 100vh;
-    background-size: 1000000% 1000000%;
-    animation: move 7s alternate infinite;
+    background: radial-gradient(circle at top, #4a4a4a 0%, #2b2b2b 45%, #171717 100%);
 }
-
-@keyframes move {
-    from {
-        background-position: 0%;
-    }
-
-
-    to {
-        background-position: 100% 100%;
-    }
-}
-
-
-.theme-btn {
-    border: none;
-    background: transparent;
-    font-size: 1.8rem;
-    cursor: pointer;
-}
-
-
-body.dark .background {
-    background-image: linear-gradient(#6D6C6C, #222121);
-}
-
-
-body.light .background {
-    background-image: linear-gradient(#ffffff, #aaaaaa); /*vagy ((#e3f2fd, #ffffff);)*/
-    min-height: 100vh;
-    background-size: 1000000% 1000000%;
-    animation: move 7s alternate infinite;
-}
-
 
 .csetliColor {
     background: linear-gradient(to right, #FD0303ff, #D95E2Eff);
@@ -44,6 +8,10 @@ body.light .background {
     -webkit-background-clip: text;
 
     color: transparent;
+}
+
+.csetliColor2 {
+    background: linear-gradient(to right, #FD0303ff, #D95E2Eff);
 }
 
 .icon {
@@ -62,45 +30,45 @@ body.light .background {
     background-color: #2b2b2b;
 }
 
-.accDelete{
+.accDelete {
     color: rgba(180, 11, 11, 0.521);
 }
 
 .container {
-  display: flex;
-  width: 100%;
+    display: flex;
+    width: 100%;
 }
 
-.container > div:first-child {
-  flex: 1; 
+.container>div:first-child {
+    flex: 1;
 }
 
-.container > div:nth-child(2) {
-  flex: 3; 
+.container>div:nth-child(2) {
+    flex: 3;
 }
 
-/* 1. Képek ne lógjanak ki soha */
+ /* 1. Képek ne lógjanak ki soha / */
 img {
     max-width: 100%;
     height: auto;
 }
 
-/* 2. A 'background' osztály paddingjének felülírása mobilon */
+/* / 2. A 'background' osztály paddingjének felülírása mobilon / */
 @media (max-width: 768px) {
     .background {
         padding: 20px !important;
     }
 
-    /* Ha mobilon túl nagyok a betűk, itt csökkentheted */
-    .fs-1 { 
-        font-size: 1.5rem !important; 
+    /* / Ha mobilon túl nagyok a betűk, itt csökkentheted / */
+    .fs-1 {
+        font-size: 1.5rem !important;
     }
 }
 
 .cardsContainer {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
 }
 
 .profile-preview-container {
@@ -126,11 +94,14 @@ img {
 }
 
 .friends-card {
-    width: 100%; /* Kitölti a Bootstrap oszlopát */
-    max-width: 350px; /* De ne legyen túl óriási se */
-    margin: 0 auto; /* Középre igazítja az oszlopon belül */
+    width: 100%;
+    /* Kitölti a Bootstrap oszlopát */
+    max-width: 350px;
+    /* De ne legyen túl óriási se */
+    margin: 0 auto;
+    /* Középre igazítja az oszlopon belül */
 }
 
-.color{
+.color {
     color: antiquewhite;
 }

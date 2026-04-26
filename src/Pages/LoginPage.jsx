@@ -31,8 +31,8 @@ export default function LoginPage() {
             {/* A 'w-100' és 'maxWidth' miatt mobilon összehúzódik, de gépen nem lesz túl nagy */}
             <div className="w-100" style={{ maxWidth: "500px" }}>
                 <div className="text-center fs-1 mb-3 csetliColor">{lang.login}</div>
-                <TextBox title={"E-mail vagy felhasználónév"} type={"text"} placeholder={lang.Placeholderemailorusername} value={usernameOrEmail} setValue={setUsernameOrEmail} />
-                <TextBox title={"Jelszó"} type={"password"} placeholder={lang.placeholderpassword} value={jelszo} setValue={setJelszo} />
+                <TextBox title={lang.emailorusername} type={"text"} placeholder={lang.Placeholderemailorusername} value={usernameOrEmail} setValue={setUsernameOrEmail} />
+                <TextBox title={lang.password} type={"password"} placeholder={lang.placeholderpassword} value={jelszo} setValue={setJelszo} />
 
                 <div className="text-center mt-3 csetliColor">
                     <Button content={lang.login} onClick={async () => {
@@ -41,7 +41,6 @@ export default function LoginPage() {
                             return;
                         }
                         const res = await belepes(usernameOrEmail, jelszo);
-                        alert(res.message)
                         if (res.result) {
                             // navigálás a bejelentkezésbe
                             navigate("/mainmenu")
@@ -51,11 +50,6 @@ export default function LoginPage() {
 
                 <div className="text-center mt-3">
                     <Link to="/registration" className="csetliColor text-decoration-none">{lang.donthaveaccount}</Link>
-                </div>
-
-                {/* kiszedni ha kész minden */}
-                <div className="text-center mt-2">
-                    <Link to="/mainmenu" className="csetliColor text-decoration-none">vendég fiók</Link>
                 </div>
 
                 <div className="text-center mt-2">

@@ -2,6 +2,7 @@ export default function UzenetekCard({ profilkep, balUzenet, jobbUzenet }) {
     return (
         <div className="d-flex flex-column p-4">
 
+
             {/* BAL OLDALI ÜZENET - Csak akkor jelenik meg, ha van balUzenet */}
             {balUzenet && (
                 <div className="d-flex flex-row align-items-start mb-3">
@@ -10,16 +11,17 @@ export default function UzenetekCard({ profilkep, balUzenet, jobbUzenet }) {
                         src={profilkep}
                         className="me-2"
                     />
-                    <div style={{ padding: "10px 20px", borderRadius: "20px", maxWidth: "550px", backgroundColor: "#D95E2Eff", color: "white" }}>
+                    <div style={{ padding: "10px 20px", borderRadius: "20px", maxWidth: "550px", backgroundColor: "#FD0303ff", color: "white" }}>
                         {balUzenet}
                     </div>
                 </div>
             )}
 
+
             {/* JOBB OLDALI ÜZENET - Csak akkor jelenik meg, ha van jobbUzenet */}
             {jobbUzenet && (
                 <div className="d-flex flex-row-reverse align-items-end ms-auto mb-3">
-                    <div style={{ padding: "10px 20px", borderRadius: "20px", maxWidth: "550px", backgroundColor: "#007bff", color: "white" }}>
+                    <div style={{ padding: "10px 20px", borderRadius: "20px", maxWidth: "550px", backgroundColor: "#D95E2Eff", color: "white" }}>
                         {jobbUzenet}
                     </div>
                     <img
@@ -29,6 +31,7 @@ export default function UzenetekCard({ profilkep, balUzenet, jobbUzenet }) {
                     />
                 </div>
             )}
+
 
         </div>
     )

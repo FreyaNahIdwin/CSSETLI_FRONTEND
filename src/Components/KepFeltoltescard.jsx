@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import "../style/style.css";
 import { bejegyzes } from '../api';
+import Language from "../Components/Lanugage";
+import getLanguage from "../language"
 
 export default function KepFeltoltesCard() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,6 +24,13 @@ export default function KepFeltoltesCard() {
             setImagePreview(imageUrl);
         }
     };
+    const [lang, setLang] = useState(getLanguage("1"))
+
+    useEffect(() => {
+        // a localstorage-et beolvassuk
+        const language = JSON.parse(localStorage.getItem("language")) || { lang: "0" }
+        setLang(getLanguage(language.lang))
+    }, [])
 
     useEffect(() => {
         const handleScroll = () => {
@@ -36,17 +45,19 @@ export default function KepFeltoltesCard() {
         <>
             {/* Új bejegyzés gomb */}
             {isVisible && (
-                <div className="position-fixed" style={{ top: "80px", right: "20px", zIndex: 1050 }}>
+                <div
+                    className="position-fixed"
+                    style={{ top: "80px", right: "20px", zIndex: 1050 }}
+                >
                     <button
-                        className="btn btn-csetliColor shadow-lg d-flex align-items-center gap-2 text-white px-4 py-2"
+                        className="btn csetliColor2 shadow-lg d-flex align-items-center gap-2 text-white px-4 py-2"
                         style={{ borderRadius: "25px", border: "none" }}
                         onClick={toggleModal}
                     >
-                        <span className="fw-bold">+ Új bejegyzés</span>
+                        <span className="fw-bold">{lang.newPost}</span>
                     </button>
                 </div>
             )}
-
             {isModalOpen && (
                 <div
                     className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
@@ -80,22 +91,22 @@ export default function KepFeltoltesCard() {
                                         {imagePreview ? (
                                             <img src={imagePreview} alt="Preview" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                                         ) : (
-                                            <span className="text-secondary">Nincs kép kiválasztva</span>
+                                            <span className="text-secondary">{lang.imgselect}</span>
                                         )}
                                     </div>
 
                                     <label className="btn btn-outline-light w-100 py-2 mt-3 shadow-none" style={{ borderRadius: "10px", borderStyle: "dashed" }}>
-                                        📷 Kép kiválasztása
+                                        {lang.imgselectselect}
                                         <input type="file" hidden accept="image/*" onChange={handleImageChange} />
                                     </label>
                                 </div>
 
                                 {/* JOBB OSZLOP */}
                                 <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-                                    <h5 className="text-secondary text-center mb-3" style={{ height: "24px" }}>Szöveg Helye</h5>
+                                    <h5 className="text-secondary text-center mb-3" style={{ height: "24px" }}>{lang.szoveg}</h5>
                                     <textarea
                                         className="form-control bg-dark text-white border-secondary shadow-none p-3"
-                                        placeholder="Mi jár a fejedben?"
+                                        placeholder={lang.whatsonurmind}
                                         value={tartalom}
                                         onChange={(e) => setTartalom(e.target.value)}
                                         style={{
@@ -116,7 +127,7 @@ export default function KepFeltoltesCard() {
                                 })();
 
                             }}>
-                                Közzététel
+                                {lang.post}
                             </button>
                         </div>
                     </div>

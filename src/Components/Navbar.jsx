@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom"; // Ez az a sor, ami valószínűleg hiányzott!
+import { Link } from "react-router-dom";
 
 export default function Navbar({ homeI, messagesI, settingsI, peopleI }) {
     return (

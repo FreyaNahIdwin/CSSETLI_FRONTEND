@@ -42,7 +42,7 @@ export default function KepSzerkesztesCard() {
                         style={{ borderRadius: "25px", border: "none" }}
                         onClick={toggleModal}
                     >
-                        <span className="fw-bold">+ Bejegyzés Szerkesztése</span>
+                        <span className="fw-bold"></span>
                     </button>
                 </div>
             )}

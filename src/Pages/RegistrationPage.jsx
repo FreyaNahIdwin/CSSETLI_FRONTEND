@@ -88,12 +88,12 @@ export default function RegistrationPage() {
                     {/* KÉPFELTÖLTÉS RÉSZ */}
                     <div className="col-12 col-md-4">
                         <div className="d-flex flex-column align-items-center">
-                            <h3 className="mb-3 csetliColor text-center">Profilkép feltöltése</h3>
+                            <h3 className="mb-3 csetliColor text-center">{lang.PictureUpload}</h3>
                             <div className="mb-3 profile-preview-container">
                                 {imagePreview ? (
                                     <img src={imagePreview} className="profile-preview-img" alt="Preview" />
                                 ) : (
-                                    <div className="d-flex align-items-center h-100 justify-content-center text-secondary">Nincs kép</div>
+                                    <div className="d-flex align-items-center h-100 justify-content-center text-secondary">{lang.upload}</div>
                                 )}
                             </div>
                             <input type="file" accept="image/*" className="form-control mb-3 w-75" onChange={saveToPreview} />
