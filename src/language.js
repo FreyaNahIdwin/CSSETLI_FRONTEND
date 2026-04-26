@@ -65,6 +65,8 @@ export default function useLanguage(language) {
         newpost: language === "1" ? "+ Új bejegyzés" : "+ New post",
         commenthere: language === "1" ? "Ide írd a kommentet..." : "Write your comment here...",
         saveimage: language === "1" ? "Kép mentése" : "Save image",
+        more: language === "1" ? "Több megjelenitése" : "Show more",
+        less: language === "1" ? "Kevesebb megjelenitése" : "Show less",
 
     }
 }
