@@ -289,10 +289,12 @@ Frontend repository:
 CSSETLI_FRONTEND
 
 Készítette 
-Plébán Tamás
-Kincses László 
-Tömöri Gábor
+-Plébán Tamás
+-Kincses László 
+-Tömöri Gábor
+
 Megjegyzés
+
 Ez a frontend projekt backend API-ra épül, ezért önmagában nem minden funkció használható.
 A teljes működéshez szükség van a hozzá tartozó backend szerverre és adatbázisra is.
 Backend repository:
