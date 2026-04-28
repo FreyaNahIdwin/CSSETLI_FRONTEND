@@ -33,10 +33,10 @@ A frontend kommunikál a backend API-val, és kezeli a felhasználói műveletek
 - **Fetch API**
 - **LocalStorage**
 
-—
-# Design
+## Design
+A fejlesztést megelőzte a prototípus készítése, amelyet Figma szoftver segítségével alakítottunk ki:
 <img width="512" height="284" alt="figma" src="https://github.com/user-attachments/assets/6403e1d8-c9df-4520-bd2a-a6caec5eb4d8" />
-
+[FIGMA LINK](https://www.figma.com/design/ocSGDgKWq4LhAy0tyBQnrS/Csetli?node-id=0-1&t=UBm5mwVCD0bvxzBI-1)
 
 ## Fő funkciók
 
@@ -95,7 +95,7 @@ A frontend kommunikál a backend API-val, és kezeli a felhasználói műveletek
 <img width="512" height="245" alt="bejegyzespost" src="https://github.com/user-attachments/assets/515ddb4d-3e2b-4345-9cb6-1935ed8e0748" />
 
 
-### Ismerősök / Emberek oldal
+### Ismerősök / felhasználók oldal
 - más felhasználók listázása
 - követés / ismerős hozzáadása
 - követés megszüntetése
@@ -122,7 +122,7 @@ A frontend kommunikál a backend API-val, és kezeli a felhasználói műveletek
 <img width="512" height="247" alt="settings" src="https://github.com/user-attachments/assets/bccf5056-7e74-445e-a8d7-6caaed5669c3" />
 
 
-### Nyelvkezelés
+## Nyelvkezelés
 - magyar és angol nyelv támogatása
 - a kiválasztott nyelv localStorage-ban mentődik
 - újratöltés után is megmarad
@@ -163,144 +163,141 @@ src/
 │── api.js
 │── language.js
 ```
-Telepítés
+## Telepítés
 1. Repository klónozása
+
+```
 git clone https://github.com/FreyaNahIdwin/CSSETLI_FRONTEND.git
 cd CSSETLI_FRONTEND
+```
 
-2. Függőségek telepítése
+3. Függőségek telepítése
+```
 npm install
+```
 
-3. Fejlesztői szerver indítása
+4. Fejlesztői szerver indítása
+```
 npm run dev
+```
 
-Backend kapcsolat
+## Backend kapcsolat
 A frontend a backend API-val kommunikál fetch segítségével.
 Ha helyi környezetben szeretnéd futtatni a projektet, akkor ezt módosítanod kell a saját backend címedre, például:
+
+```
 export const BASE = 'http://localhost:3000'
+```
 
 
 
-
-API műveletek
+## API műveletek
 A frontend az alábbi főbb backend műveleteket használja:
-regisztráció
-bejelentkezés
-felhasználónév módosítása
-profilkép módosítása
-jelszó módosítása
-bejegyzés létrehozása
-bejegyzések lekérése
-komment küldése és lekérése
-emoji küldése és számlálása
-ismerősök lekérése
-üzenetek lekérése és küldése
-kijelentkezés
-fiók törlése
-felhasználók listázása
+- regisztráció
+- bejelentkezés
+- felhasználónév módosítása
+- profilkép módosítása
+- jelszó módosítása
+- bejegyzés létrehozása
+- bejegyzések lekérése
+- komment küldése és lekérése
+- emoji küldése és számlálása
+- ismerősök lekérése
+- üzenetek lekérése és küldése
+- kijelentkezés
+- fiók törlése
+- felhasználók listázása
 
-Oldalak
-/
-Kezdőoldal
-/registration
-Regisztrációs oldal
-/login
-Bejelentkezési oldal
-/about
-Rólunk oldal
-/mainmenu
-Fő feed / bejegyzések oldala
-/messages
-Üzenetek oldal
-/people
-Felhasználók / ismerősök oldal
-/settings
-Beállítások oldal
+## Oldalak
+- `/Kezdőoldal` 
+- `/registration` : Regisztrációs oldal
+- `/login` : Bejelentkezési oldal
+- `/about` : Rólunk oldal
+- `/mainmenu` : feed / bejegyzések oldala
+- `/messages` : Üzenetek oldal
+- `/people` : Felhasználók / ismerősök oldal
+- `/settings` : Beállítások oldal
 
-Komponensek röviden
-Navbar
-Felső navigációs sáv ikonokkal.
-Button
-Egyedi gomb komponens, amely több oldalon is újrahasznosítható.
-TextBox
-Egységes inputmező komponens.
-PostCard
-Egy bejegyzés teljes megjelenítését kezeli, beleértve:
-szöveg
-kép
-like
-kommentek
-törlés
-PeopleCard
-Felhasználói kártya az emberek oldalon.
-BaratokCard
-Ismerősök megjelenítése az üzenetküldő felületen.
-UzenetekCard
-Bal és jobb oldali üzenetbuborékok megjelenítése.
-KepFeltoltesCard
-Új bejegyzés létrehozására szolgáló modál.
-Language
-Nyelvválasztó komponens.
+### Komponensek röviden
 
-Stílusok
+Navbar: Felső navigációs sáv ikonokkal.
+
+Button: Egyedi gomb komponens, amely több oldalon is újrahasznosítható.
+
+TextBox: Egységes inputmező komponens.
+
+PostCard: Egy bejegyzés teljes megjelenítését kezeli, beleértve:
+
+- szöveg
+- kép
+- like
+- kommentek
+- törlés
+
+PeopleCard: Felhasználói kártya az emberek oldalon.
+
+BaratokCard: Ismerősök megjelenítése az üzenetküldő felületen.
+
+UzenetekCard: Bal és jobb oldali üzenetbuborékok megjelenítése.
+
+KepFeltoltesCard: Új bejegyzés létrehozására szolgáló modál.
+
+Language: Nyelvválasztó komponens.
+
+## Stílusok
 A projekt egyedi CSS-t használ a Bootstrap mellett.
-Jellemző stíluselemek:
-sötét témájú háttér
-piros-narancs színátmenetek
-lekerekített kártyák
-reszponzív elrendezés
-mobilbarát megjelenítés
-Főbb egyedi osztályok:
-background
-csetliColor
-csetliColor2
-bombo
 
-Nyelvi támogatás
-A projekt két nyelvet kezel:
-magyar
-angol
-A nyelvi szövegek a language.js fájlban találhatók.
-A kiválasztott nyelv localStorage-ban kerül mentésre.
+### Jellemző stíluselemek:
 
-Reszponzivitás
+- sötét témájú háttér
+- piros-narancs színátmenetek
+- lekerekített kártyák
+- reszponzív elrendezés
+- mobilbarát megjelenítés
+
+### Főbb egyedi osztályok:
+
+- background
+- csetliColor
+- csetliColor2
+- bombo
+
+## Reszponzivitás
 A felület mobilra is optimalizált:
-kisebb kijelzőkön igazított margók és betűméretek
-mobilbarát üzenetoldal
-rugalmas grid rendszer
-automatikusan méreteződő képek
+- kisebb kijelzőkön igazított margók és betűméretek
+- mobilbarát üzenetoldal
+- rugalmas grid rendszer
+- automatikusan méreteződő oldalak
 <img width="241" height="512" alt="setingsrespo" src="https://github.com/user-attachments/assets/feec809f-adb7-401f-8730-baf179fc8172" />
 <img width="273" height="512" alt="mainrespo" src="https://github.com/user-attachments/assets/bb87adf0-0eeb-40f3-9450-4e1ef02524ef" />
 
 
 
-Ismert fejlesztési lehetőségek
-A projekt tovább fejleszthető például az alábbi területeken:
-jobb hibakezelés a frontend oldalon
-egységesebb komponensnév-használat
-duplikált kódrészek kiszervezése
-loading állapotok és felhasználóbarátabb visszajelzések
-form validációk további erősítése
-jobb állapotkezelés összetettebb nézetekhez
-jobb hozzáférhetőség
+## Fejlesztési lehetőségek
+- A projekt tovább fejleszthető például az alábbi területeken:
+- jobb hibakezelés a frontend oldalon
+- egységesebb komponensnév-használat
+- duplikált kódrészek kiszervezése
+- loading állapotok és felhasználóbarátabb visszajelzések
+- form validációk további erősítése
+- jobb állapotkezelés összetettebb nézetekhez
+- jobb hozzáférhetőség
 
-Repository link
-Frontend repository:
-CSSETLI_FRONTEND
+## Készítette: 
+- [Plébán Tamás](https://github.com/FreyaNahIdwin)  
+- [Kincses László](https://github.com/T3KK3NHU)
+- [Tömöri Gábor](https://github.com/Tomorigabor440)
 
-Készítette 
--Plébán Tamás
--Kincses László 
--Tömöri Gábor
-
-Megjegyzés
-
-Ez a frontend projekt backend API-ra épül, ezért önmagában nem minden funkció használható.
-A teljes működéshez szükség van a hozzá tartozó backend szerverre és adatbázisra is.
-Backend repository:
+## Backend repository:
 https://github.com/FreyaNahIdwin/CSETLI_BACKEND
 
 
+## Tesztelés
+felhasználó:
+- email: tomi@gmail.com
+- felhasználónév: tomi
+- jelszó: tomi
 
+Deploy link: [LINK](https://csetli.netlify.app)
 
 
