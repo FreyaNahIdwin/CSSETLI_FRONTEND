@@ -23,7 +23,6 @@ export default function Messages() {
     const [ismerosId, setIsmerosId] = useState(null);
     const [szobaId, setSzobaId] = useState(null);
     const [text, setText] = useState("");
-    const [sajatKep, setSajatKep] = useState(null);
     const [kivalasztottIsmerosKep, setKivalasztottIsmerosKep] = useState(null);
     const [uzenet, setUzenet] = useState([]);
     const messagesEndRef = useRef(null);
@@ -39,10 +38,6 @@ export default function Messages() {
             }
         })();
 
-        (async () => {
-            const me = await adataim();
-            if (me.result) setSajatKep(me.user?.kep ?? null);
-        })();
 
         const language = JSON.parse(localStorage.getItem("language")) || { lang: "0" };
         setLang(getLanguage(language.lang));
@@ -108,7 +103,6 @@ export default function Messages() {
             if (refreshed.result) setUzenet(refreshed.message.uzenetek);
         }
     };
-
     return (
         <>
             <style>
@@ -353,27 +347,13 @@ export default function Messages() {
                                                                 ? `${BASE}/uploads/${kivalasztottIsmerosKep}`
                                                                 : undefined
                                                         }
-                                                        jobbProfilkep={
-                                                            sajatKep
-                                                                ? `${BASE}/uploads/${sajatKep}`
-                                                                : undefined
-                                                        }
                                                     />
                                                 ) : (
                                                     <UzenetekCard
                                                         key={msg.id ?? i}
                                                         jobbUzenet={msg.szoveg}
-                                                        balProfilkep={
-                                                            kivalasztottIsmerosKep
-                                                                ? `${BASE}/uploads/${kivalasztottIsmerosKep}`
-                                                                : undefined
-                                                        }
-                                                        jobbProfilkep={
-                                                            sajatKep
-                                                                ? `${BASE}/uploads/${sajatKep}`
-                                                                : undefined
-                                                        }
                                                     />
+                                                    
                                                 )
                                             )}
 
@@ -396,13 +376,13 @@ export default function Messages() {
                                             }
                                         }}
                                     />
-                                     <Button
+                                    <Button
                                         content={lang.Send}
                                         className="btn csetliColor"
                                         disabled={!szobaId || !text.trim()}
                                         onClick={sendMessage}
-                                        >
-                                     </Button>
+                                    >
+                                    </Button>
                                 </div>
                             </div>
                         </div>
