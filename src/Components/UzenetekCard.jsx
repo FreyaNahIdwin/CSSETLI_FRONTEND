@@ -1,4 +1,6 @@
-export default function UzenetekCard({ profilkep, balUzenet, jobbUzenet }) {
+import React, { useState, useEffect } from "react";
+export default function UzenetekCard({ balUzenet, jobbUzenet, balProfilkep,jobbProfilkep}) {
+
     return (
         <div className="d-flex flex-column p-4">
 
@@ -8,7 +10,7 @@ export default function UzenetekCard({ profilkep, balUzenet, jobbUzenet }) {
                 <div className="d-flex flex-row align-items-start mb-3">
                     <img
                         style={{ width: "40px", height: "40px", objectFit: "cover", borderRadius: "50%" }}
-                        src={profilkep}
+                        src={balProfilkep}
                         className="me-2"
                     />
                     <div style={{ padding: "10px 20px", borderRadius: "20px", maxWidth: "550px", backgroundColor: "#FD0303ff", color: "white" }}>
@@ -24,11 +26,6 @@ export default function UzenetekCard({ profilkep, balUzenet, jobbUzenet }) {
                     <div style={{ padding: "10px 20px", borderRadius: "20px", maxWidth: "550px", backgroundColor: "#D95E2Eff", color: "white" }}>
                         {jobbUzenet}
                     </div>
-                    <img
-                        style={{ width: "40px", height: "40px", objectFit: "cover", borderRadius: "50%" }}
-                        src={profilkep}
-                        className="ms-2"
-                    />
                 </div>
             )}
 
