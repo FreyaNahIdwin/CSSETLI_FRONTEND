@@ -289,7 +289,7 @@ A felület mobilra is optimalizált:
 - [Tömöri Gábor](https://github.com/Tomorigabor440)
 
 ## Backend repository:
-https://github.com/FreyaNahIdwin/CSETLI_BACKEND
+https://github.com/HarithML/CSETLI_BACKEND
 
 
 ## Tesztelés
